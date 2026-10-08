@@ -1,16 +1,36 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { API_URL } from "../config/api";
 
 function LoginPage() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
 
-    console.log(API_URL);
-    console.log(email);
-    console.log(password);
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      console.log(data)
+      return
+    }
+
+    localStorage.setItem("token", data.token);
+    navigate("/todos");
   }
 
   return (
