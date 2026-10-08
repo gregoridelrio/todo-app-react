@@ -1,15 +1,17 @@
 import { useState } from "react";
+import { API_URL } from "../config/api";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-  event.preventDefault();
+    event.preventDefault();
 
-  console.log(email);
-  console.log(password);
-}
+    console.log(API_URL);
+    console.log(email);
+    console.log(password);
+  }
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-100">
